@@ -17,7 +17,7 @@ class Data {
 List<Data> dataList = [
   Data(
     imageUrl: "https://summer.harvard.edu/wp-content/uploads/sites/7/2022/09/test-taking-tips.jpg",
-    title: "Проще с каждым годом? Как менялось ЕНТ за последние 10 лет",
+    title: "Pроще с каждым годом? Как менялось ЕНТ за последние 10 лет",
     subtitle: "Каждый старшеклассник мечтает стать студентом, обучиться специальности и найти престижную работу. В Казахстане, чтобы поступить в высшее...",
     link: "https://www.figma.com/file/iZ1kW0ugrOrxTeplWiM61y/DIPLOMA-PROJECT?type=design&node-id=412-2960&mode=design&t=mSbxQKge6Xf569oV-0",
     date: "03 мая 2024",
