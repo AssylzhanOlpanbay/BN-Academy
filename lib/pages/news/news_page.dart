@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:bn_academy_school/constants/app_color.dart';
 import 'package:bn_academy_school/pages/news/data_list.dart';
 import 'package:bn_academy_school/pages/news/news_button.dart';
+import 'package:bn_academy_school/pages/profile/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsPage extends StatefulWidget {
-
   NewsPage({super.key});
 
   @override
@@ -16,17 +18,18 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  List _news = [];
+  final ProfileController profileController = Get.put(ProfileController());
+  List<Data> _news = [];
 
   @override
-  initState() {
+  void initState() {
     _news = dataList;
     super.initState();
   }
 
   void updateList(String value) {
     setState(() {
-      _news = dataList.where((element) => element.title!.toLowerCase().contains(value.toLowerCase())).toList();
+      _news = dataList.where((element) => element.title.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 
@@ -56,89 +59,89 @@ class _NewsPageState extends State<NewsPage> {
           String savedName = snapshot.data?['name'] ?? '';
           String savedEmail = snapshot.data?['email'] ?? '';
           String profileImagePath = snapshot.data?['profileImagePath'] ?? '';
-      return Scaffold(
-        backgroundColor: AppColor.backgroundColor,
-        body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.only(top: screenHeight * 0.05),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Row(
-                    children: [
-                      Text("Новости", style: TextStyle(fontSize: screenWidth * 0.07, fontWeight: FontWeight.bold),),
-                      const Spacer(),
-                      CircleAvatar(
-                        backgroundImage: profileImagePath.isNotEmpty ? FileImage(File(profileImagePath)) : null,
-                        child: profileImagePath.isEmpty ? Icon(Icons.person, size: 70) : null,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.05),
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  height: screenWidth * 0.1,
-                  child: CupertinoSearchTextField(
-                    onChanged: (value) => updateList(value),
-                    placeholder: "Поиск",
-                    placeholderStyle: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro", color: AppColor.textFormFieldFilledBorderColor),
-                    decoration: BoxDecoration(
-                      color: AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: AppColor.textFormFieldBorderColor),
+          return Scaffold(
+            backgroundColor: AppColor.backgroundColor,
+            body: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.only(top: screenHeight * 0.05),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                      child: Row(
+                        children: [
+                          Text("Новости", style: TextStyle(fontSize: screenWidth * 0.07, fontWeight: FontWeight.bold),),
+                          const Spacer(),
+                          CircleAvatar(
+                            backgroundImage: profileController.profileImagePath.value.isNotEmpty
+                                ? FileImage(File(profileController.profileImagePath.value))
+                                : null,
+                            child: profileController.profileImagePath.value.isEmpty
+                                ? Icon(Icons.person, size: 30)
+                                : null,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Text(
-                    "Последние новости", 
-                    style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
-                  )
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  height: screenHeight * 0.5,
-                  child: Expanded(
-                    child: _news.isNotEmpty
-                    ? NewsButton(news: _news)
-                    : const Text(
-                        'No results found',
-                        style: TextStyle(fontSize: 24),
+                    SizedBox(height: screenHeight * 0.05),
+                    Container(
+                      margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                      height: screenWidth * 0.1,
+                      child: CupertinoSearchTextField(
+                        onChanged: (value) => updateList(value),
+                        placeholder: "Поиск",
+                        placeholderStyle: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro", color: AppColor.textFormFieldFilledBorderColor),
+                        decoration: BoxDecoration(
+                          color: AppColor.whiteColor,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColor.textFormFieldBorderColor),
+                        ),
                       ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Text(
-                    "Популярные новости", 
-                    style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
-                  )
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  height: screenHeight * 0.5,
-                  child: Expanded(
-                    child: _news.isNotEmpty
-                    ? NewsButton(news: _news)
-                    : const Text(
-                        'No results found',
-                        style: TextStyle(fontSize: 24),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                      child: Text(
+                        "Последние новости",
+                        style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
                       ),
-                  ),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      height: screenHeight * 0.5,
+                      child: _news.isNotEmpty
+                        ? NewsButton(news: _news)
+                        : const Text(
+                            'No results found',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      margin: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                      child: Text(
+                        "Популярные новости",
+                        style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      height: screenHeight * 0.5,
+                      child: _news.isNotEmpty
+                        ? NewsButton(news: _news)
+                        : const Text(
+                            'No results found',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      );
-      }
-      }
+          );
+        }
+      },
     );
   }
 }

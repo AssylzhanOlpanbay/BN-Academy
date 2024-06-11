@@ -31,27 +31,65 @@ class CustomBottomNavigationBar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         unselectedFontSize: screenWidth * 0.03,
-        unselectedItemColor: AppColor.mainColor.withOpacity(0.5),
+        unselectedItemColor: AppColor.newsButtonSubtitleTextColor,
         selectedItemColor: AppColor.mainColor,
         showUnselectedLabels: true,
         showSelectedLabels: true,
         selectedFontSize: 14,
-        selectedLabelStyle:
-            const TextStyle(color: AppColor.mainColor),
+        selectedLabelStyle: const TextStyle(color: AppColor.mainColor),
         unselectedLabelStyle: TextStyle(color: AppColor.mainColor),
         elevation: 0,
         items: [
           BottomNavigationBarItem(
-              label: pageNames[0], icon: const Icon(Icons.home)),
+            label: pageNames[0],
+            icon: SizedBox(
+              width: screenWidth * 0.05,
+              height: screenHeight * 0.05,
+              child: ImageIcon(
+                AssetImage('assets/images/home.png'),
+              ),
+            ),
+          ),
           BottomNavigationBarItem(
-              label: pageNames[1], icon: const Icon(Icons.newspaper_rounded)),
+            label: pageNames[1],
+            icon: SizedBox(
+              width: screenWidth * 0.05,
+              height: screenHeight * 0.05,
+              child: ImageIcon(
+                AssetImage('assets/images/news.png'),
+              ),
+            ),
+          ),
           BottomNavigationBarItem(
-              label: pageNames[2],
-              icon: const Icon(Icons.folder_copy_rounded)),
+            label: pageNames[2],
+            icon: SizedBox(
+              width: screenWidth * 0.05,
+              height: screenHeight * 0.05,
+              child: ImageIcon(
+                AssetImage('assets/images/lessons.png'),
+              ),
+            ),
+          ),
           BottomNavigationBarItem(
-              label: pageNames[3], icon: const Icon(Icons.stairs_outlined)),
+            label: pageNames[3],
+            icon: SizedBox(
+              width: screenWidth * 0.05,
+              height: screenHeight * 0.05,
+              child: ImageIcon(
+                AssetImage('assets/images/progress.png'),
+              ),
+            ),
+          ),
           BottomNavigationBarItem(
-              label: pageNames[4], icon: const Icon(Icons.person_2_outlined)),
+            label: pageNames[4],
+            icon: SizedBox(
+              width: screenWidth * 0.05,
+              height: screenHeight * 0.05,
+              child: ImageIcon(
+                AssetImage('assets/images/profile.png'),
+              ),
+            ),
+          ),
         ],
       ),
     );

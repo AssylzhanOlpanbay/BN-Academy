@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 class SubjectItem extends StatefulWidget {
   final String title;
   final String subtitle;
-  final String imageUrl;
   final List<String> lessonNames;
 
   const SubjectItem({
     Key? key,
     required this.title,
     required this.subtitle,
-    required this.imageUrl,
     required this.lessonNames,
   }) : super(key: key);
 
@@ -54,7 +52,7 @@ class _SubjectItemState extends State<SubjectItem> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        widget.imageUrl,
+                        'https://images.theconversation.com/files/49135/original/22qc7r28-1400667334.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=754&fit=clip',
                         height: screenHeight * 0.15,
                         width: screenWidth * 0.3,
                         fit: BoxFit.cover,
@@ -67,7 +65,7 @@ class _SubjectItemState extends State<SubjectItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(widget.title, style: TextStyle(fontSize: screenWidth * 0.06, fontFamily: "TTNormsPro", fontWeight: FontWeight.bold)),
+                        Text(widget.title, style: TextStyle(fontSize: screenWidth * 0.045, fontFamily: "TTNormsPro", fontWeight: FontWeight.bold)),
                         Text("${widget.subtitle} уроков", style: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro",)),
                         SizedBox(height: screenHeight * 0.01),
                         Container(
@@ -118,11 +116,11 @@ class _SubjectItemState extends State<SubjectItem> {
                   title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text( lesson, style: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro", fontWeight: FontWeight.normal,),),
+                      Container(width: screenWidth * 0.45, child: Text( lesson, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro", fontWeight: FontWeight.normal,),)),
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const VideoLessonPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const VideoLessonPage()));
                         }, 
                         child: Text("Пройти урок", style: TextStyle(fontSize: screenWidth * 0.04, fontFamily: "TTNormsPro", color: AppColor.learnLessonTextColor),),
                       )

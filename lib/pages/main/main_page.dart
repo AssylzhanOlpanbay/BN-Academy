@@ -4,7 +4,10 @@ import 'package:bn_academy_school/constants/app_color.dart';
 import 'package:bn_academy_school/pages/main/big_card.dart';
 import 'package:bn_academy_school/pages/main/medium_card.dart';
 import 'package:bn_academy_school/pages/main/mini_card.dart';
+import 'package:bn_academy_school/pages/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
@@ -15,6 +18,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final ProfileController profileController = Get.put(ProfileController());
+
   Future<Map<String, String>> getUserInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String savedName = prefs.getString('name') ?? '';
@@ -53,9 +58,13 @@ class _MainPageState extends State<MainPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CircleAvatar(
-                      backgroundImage: profileImagePath.isNotEmpty ? FileImage(File(profileImagePath)) : null,
-                      child: profileImagePath.isEmpty ? Icon(Icons.person, size: 70) : null,
-                    )
+                            backgroundImage: profileController.profileImagePath.value.isNotEmpty
+                                ? FileImage(File(profileController.profileImagePath.value))
+                                : null,
+                            child: profileController.profileImagePath.value.isEmpty
+                                ? Icon(Icons.person, size: 30)
+                                : null,
+                          ),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.02),

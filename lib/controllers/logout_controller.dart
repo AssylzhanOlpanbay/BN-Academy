@@ -41,10 +41,8 @@ class LogoutController extends GetxController {
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        // Очистка SharedPreferences
         await prefs.clear();
 
-        // Перенаправление на страницу входа
         Get.offAll(() => LoginPage());
       } else {
         Get.snackbar(

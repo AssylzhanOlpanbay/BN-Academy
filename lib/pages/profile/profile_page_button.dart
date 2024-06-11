@@ -7,7 +7,7 @@ class ProfilePageButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback press;
-  const ProfilePageButton({super.key, required this.width, required this.height, required this.icon, required this.text, required this.press});
+  const   ProfilePageButton({super.key, required this.width, required this.height, required this.icon, required this.text, required this.press});
 
   @override
   Widget build(BuildContext context) {

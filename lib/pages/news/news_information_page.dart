@@ -38,8 +38,7 @@ class NewsInformationPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Flexible(
-                  child: ClipRRect(
+                  ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -50,39 +49,46 @@ class NewsInformationPage extends StatelessWidget {
                       height: screenHeight * 0.3, 
                       fit: BoxFit.cover,
                     ),
-                  )
-                ),
-                SizedBox(height: screenHeight * 0.02),
-                Container(
-                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(data.title, style: TextStyle(fontSize: screenWidth * 0.04, fontWeight: FontWeight.bold),),
-                    SizedBox(height: screenHeight * 0.005),
-                    Text(
-                      data.subtitle,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 10,
-                      style: TextStyle(fontSize: screenWidth * 0.035),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data.title, style: TextStyle(fontSize: screenWidth * 0.04, fontWeight: FontWeight.bold),),
+                              SizedBox(height: screenHeight * 0.005),
+                              Text(
+                                data.subtitle,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 10,
+                                style: TextStyle(fontSize: screenWidth * 0.035),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Image.asset("assets/images/tengri_icon.png", width: screenWidth * 0.05,),
+                              SizedBox(width: screenWidth * 0.02),
+                              Text("TengriNews", style: TextStyle(fontSize: screenWidth * 0.035, color: AppColor.newsButtonBottomTextColor),),
+                              const Spacer(),
+                              Text(data.date, style: TextStyle(fontSize: screenWidth * 0.035, color: AppColor.newsButtonBottomTextColor),)
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Row(
-                      children: [
-                        Image.asset("assets/images/tengri_icon.png", width: screenWidth * 0.05,),
-                        SizedBox(width: screenWidth * 0.02),
-                        Text("TengriNews", style: TextStyle(fontSize: screenWidth * 0.035, color: AppColor.newsButtonBottomTextColor),),
-                        const Spacer(),
-                        Text(data.date, style: TextStyle(fontSize: screenWidth * 0.035, color: AppColor.newsButtonBottomTextColor),)
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                  ),
                 ],
               ),
             ),
-            SizedBox(height: screenHeight * 0.02),
+            SizedBox(height: screenHeight * 0.05),
             Button(
               color: AppColor.mainColor, 
               width: double.infinity, 
@@ -101,15 +107,15 @@ class NewsInformationPage extends StatelessWidget {
   }
 
   String _expandSubtitle(String subtitle) {
-  String expandedSubtitle = subtitle;
-  int linesToAdd = 10 - (expandedSubtitle.split('\n').length);
-  if (linesToAdd > 0) {
-    for (int i = 0; i < linesToAdd; i++) {
-      expandedSubtitle += '\n';
+    String expandedSubtitle = subtitle;
+    int linesToAdd = 10 - (expandedSubtitle.split('\n').length);
+    if (linesToAdd > 0) {
+      for (int i = 0; i < linesToAdd; i++) {
+        expandedSubtitle += '\n';
+      }
     }
+    return expandedSubtitle;
   }
-  return expandedSubtitle;
-}
 
   Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -119,3 +125,4 @@ class NewsInformationPage extends StatelessWidget {
     }
   }
 }
+

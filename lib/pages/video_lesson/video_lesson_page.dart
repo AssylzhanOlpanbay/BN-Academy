@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:bn_academy_school/components/button.dart';
 import 'package:bn_academy_school/constants/app_color.dart';
+import 'package:bn_academy_school/pages/profile/profile_controller.dart';
 import 'package:bn_academy_school/pages/subjects/subjects_page.dart';
+import 'package:bn_academy_school/pages/test/test_page.dart';
 import 'package:bn_academy_school/pages/video_lesson/tab1.dart';
 import 'package:bn_academy_school/pages/video_lesson/tab2.dart';
 import 'package:bn_academy_school/pages/video_lesson/video_player_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class VideoLessonPage extends StatefulWidget {
 
@@ -17,6 +23,7 @@ class VideoLessonPage extends StatefulWidget {
 }
 
 class _VideoLessonPageState extends State<VideoLessonPage> with SingleTickerProviderStateMixin {
+  final ProfileController profileController = Get.put(ProfileController());
   late TabController tabController;
 
   @override
@@ -39,7 +46,7 @@ class _VideoLessonPageState extends State<VideoLessonPage> with SingleTickerProv
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Container(
-        margin: EdgeInsets.only(top: screenHeight * 0.07, left: screenWidth * 0.05, right: screenWidth * 0.05),
+        margin: EdgeInsets.only(top: screenHeight * 0.05, left: screenWidth * 0.05, right: screenWidth * 0.05),
         child: Column(
           children: [
             Row(
@@ -53,9 +60,14 @@ class _VideoLessonPageState extends State<VideoLessonPage> with SingleTickerProv
                   icon: Icon(Icons.arrow_back, size: screenWidth * 0.07,)
                 ),
                 const Spacer(),
-                const CircleAvatar(
-                  // backgroundImage: NetworkImage("url"),
-                )
+                CircleAvatar(
+                  backgroundImage: profileController.profileImagePath.value.isNotEmpty
+                      ? FileImage(File(profileController.profileImagePath.value))
+                      : null,
+                  child: profileController.profileImagePath.value.isEmpty
+                      ? Icon(Icons.person, size: 30)
+                      : null,
+                ),
               ],
             ),
             SizedBox(height: screenHeight * 0.03),
@@ -97,7 +109,7 @@ class _VideoLessonPageState extends State<VideoLessonPage> with SingleTickerProv
                   ),
                   Container(
                     width: double.infinity,
-                    height: screenHeight * 0.35,
+                    height: screenHeight * 0.4,
                     decoration: BoxDecoration(
                       color: AppColor.whiteColor,
                       borderRadius: BorderRadius.circular(10),
@@ -116,13 +128,15 @@ class _VideoLessonPageState extends State<VideoLessonPage> with SingleTickerProv
                       ],
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.01),
+                  SizedBox(height: screenHeight * 0.03),
                   Button(
                     color: AppColor.mainColor, 
                     width: double.infinity, 
                     height: screenHeight * 0.06, 
                     text: "Начать тест", 
-                    press: () {}, 
+                    press: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const TestPage()));
+                    }, 
                     textWidth: screenWidth * 0.05, 
                     textColor: AppColor.whiteColor,
                   ),

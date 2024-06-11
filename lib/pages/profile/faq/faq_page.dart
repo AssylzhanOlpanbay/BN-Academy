@@ -6,9 +6,9 @@ import 'faq_models.dart';
 class FAQPage extends StatefulWidget {
   const FAQPage({super.key});
 
-  @override
+  @override 
   State<FAQPage> createState() => _FAQPageState();
-}
+}   
 
 class _FAQPageState extends State<FAQPage> {
   final List<FAQ> faqs = getFaqs();
